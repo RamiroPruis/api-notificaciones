@@ -1,0 +1,22 @@
+{
+  "name": "api-notificaciones",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000a\u0000p\u0000i\u0000-\u0000n\u0000o\u0000t\u0000i\u0000f\u0000i\u0000c\u0000a\u0000c\u0000i\u0000o\u0000n\u0000e\u0000s\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RamiroPruis/api-notificaciones.git"
+  },
+  "author": "Ramiro Pruis, Joaquin Fioriti, Mariano Garcia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RamiroPruis/api-notificaciones/issues"
+  },
+  "homepage": "https://github.com/RamiroPruis/api-notificaciones#readme",
+  "dependencies": {
+    "dotenv": "16.0.3"
+  }
+}
