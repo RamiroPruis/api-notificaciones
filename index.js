@@ -27,9 +27,8 @@ const server = http.createServer((req,res)=>{
                     errorHandler(400,'Parametros invalidos',res)
                 }else{
                     try{
-                        sendMail(body)
-                        res.writeHead(201,{'Content-Type':"application/json"})
-                        res.end(JSON.stringify({msg: "Mail enviado correctamente"},null,2))
+                        sendMail(body,res)
+                        
                     }
                     catch{
                         errorHandler(500,"Ocurrio un error interno, intentelo nuevamente",res)

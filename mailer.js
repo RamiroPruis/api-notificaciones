@@ -18,32 +18,33 @@ const FROM_MAIL = { email: "turnosdistribuidos@hotmail.com", name:"EL PAKE"}
 
 
 
-const req = https.request(options,(res)=>{
-
-    console.log(`STATUS CODE = ${res.statusCode}`)
-    let data = []
-    res.on('data',(chunk)=>{
-        data.push(chunk)
-    })
-
-    res.on("end",()=>{
-        const response = JSON.parse(Buffer.concat(data).toString())
-
-        console.log(response)
-    })
-
-    res.on("error",(err)=>{
-        console.log(err)
-    })
-})
 
 
 
-export default function sendMail(body){
+
+export default function sendMail(body,responseAPI){
     const mail = {"personalizations":[{"to":[{"email":body.destinatario}],"subject":body.asunto}],"content": [{"type": "text/html", "value": body.cuerpo}],"from":FROM_MAIL,"reply_to":FROM_MAIL}
-
+   
+    const req = https.request(options,(res)=>{
+        let data = []
+        res.on('data',(chunk)=>{
+            data.push(chunk)
+        })
+    
+        res.on("end",()=>{
+            let response = JSON.parse(Buffer.concat(data).toString())
+            
+            responseAPI.writeHead(res.statusCode,{"Content-Type": "application/json"})
+            responseAPI.end(JSON.stringify(response))
+        })
+    
+        res.on("error",(err)=>{
+            console.log(err)
+        })
+    })
 
     req.write(JSON.stringify(mail))
+
 
     req.end()
    
