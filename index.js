@@ -1,8 +1,5 @@
-import dotenv from 'dotenv'
-dotenv.config()
 
-
-import {sendMail} from './mailer.js'
+import sendMail from './mailer.js'
 import checkProperties from './checker.js'
 import http from 'http';
 import errorHandler from './error.js';
@@ -26,13 +23,19 @@ const server = http.createServer((req,res)=>{
             req.on("end",()=>{
                 const body = JSON.parse(Buffer.concat(data).toString())
                 
-                //sendMail(body)
                 if (!checkProperties(body)){
                     errorHandler(400,'Parametros invalidos',res)
-                }
-
-                res.writeHead(201)
-                res.end(JSON.stringify(body))
+                }else{
+                    try{
+                        sendMail(body)
+                        res.writeHead(201,{'Content-Type':"application/json"})
+                        res.end(JSON.stringify({msg: "Mail enviado correctamente"},null,2))
+                    }
+                    catch{
+                        errorHandler(500,"Ocurrio un error interno, intentelo nuevamente",res)
+                    }
+                    
+                } 
             })
             
         }else{
