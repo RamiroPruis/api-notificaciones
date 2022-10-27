@@ -1,5 +1,6 @@
 import https from 'https'
-
+import dotenv from 'dotenv'
+dotenv.config()
 
 const AUTH_TOKEN = `Bearer ${process.env.SENDGRID_API_KEY}`
 
@@ -39,15 +40,11 @@ const req = https.request(options,(res)=>{
 
 
 export default function sendMail(body){
-    const mail = {"personalizations":[{"to":[body.destinatario],"subject":body.asunto}],"content": [{"type": "text/html", "value": body.cuerpo}],"from":FROM_MAIL,"reply_to":FROM_MAIL}
+    const mail = {"personalizations":[{"to":[{"email":body.destinatario}],"subject":body.asunto}],"content": [{"type": "text/html", "value": body.cuerpo}],"from":FROM_MAIL,"reply_to":FROM_MAIL}
 
 
-    req.write(mail)
+    req.write(JSON.stringify(mail))
+
     req.end()
-
-   res.writeHead(201)
-   res.end('{msg: "Mail enviado correctamente"}')
+   
 }
-
-
-sendMail(JSON.stringify(body))
