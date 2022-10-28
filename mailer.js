@@ -32,10 +32,17 @@ export default function sendMail(body,responseAPI){
         })
     
         res.on("end",()=>{
-            let response = JSON.parse(Buffer.concat(data).toString())
+            if (res.statusCode != 202){
+                let response = JSON.parse(Buffer.concat(data).toString()) 
+           
             
-            responseAPI.writeHead(res.statusCode,{"Content-Type": "application/json"})
-            responseAPI.end(JSON.stringify(response))
+                responseAPI.writeHead(res.statusCode,{"Content-Type": "application/json"})
+                responseAPI.end(JSON.stringify(response))
+            }
+            else{
+                responseAPI.writeHead(202,{"Content-Type": "application/json"})
+                responseAPI.end('{"msg":"Email enviado correctamente"}')
+            }
         })
     
         res.on("error",(err)=>{
@@ -44,7 +51,6 @@ export default function sendMail(body,responseAPI){
     })
 
     req.write(JSON.stringify(mail))
-
 
     req.end()
    

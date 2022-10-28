@@ -4,18 +4,23 @@ import checkProperties from './checker.js'
 import http from 'http';
 import errorHandler from './error.js';
 
-const PORT = 2005
+const PORT = 2020
 
 
 
 
 const server = http.createServer((req,res)=>{
     const {url,method} = req
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Methods', '*')
+    res.setHeader('Access-Control-Allow-Allow-Headers', '*')
+
     if (url !=='/api/notificaciones'){
         errorHandler(400,"Endpoint no valido",res)
     } else{
         if (method === 'POST'){
             let data = []
+
             req.on("data",(chunk)=>{
                 data.push(chunk)
             })
@@ -26,13 +31,8 @@ const server = http.createServer((req,res)=>{
                 if (!checkProperties(body)){
                     errorHandler(400,'Parametros invalidos',res)
                 }else{
-                    try{
-                        sendMail(body,res)
-                        
-                    }
-                    catch{
-                        errorHandler(500,"Ocurrio un error interno, intentelo nuevamente",res)
-                    }
+                    
+                    sendMail(body,res)
                     
                 } 
             })
