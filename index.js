@@ -15,7 +15,7 @@ const server = http.createServer((req,res)=>{
     res.setHeader('Access-Control-Allow-Methods', '*')
     res.setHeader('Access-Control-Allow-Allow-Headers', '*')
 
-    if (url !=='/api/notificaciones'){
+    if (url !=='/api/notificacion'){
         errorHandler(400,"Endpoint no valido",res)
     } else{
         if (method === 'POST'){
