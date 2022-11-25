@@ -14,7 +14,7 @@ const options = {
       }
 }
 
-const FROM_MAIL = { email: "turnosdistribuidos@hotmail.com", name:"EL PAKE"}
+const FROM_MAIL = { email: "turnosdistribuidos@hotmail.com", name:"Te Vacunamos"}
 
 
 
